@@ -5,6 +5,14 @@ public class Vector extends Point{
         super(x, y);
     }
 
+    public Vector(Vector v){
+        super(v.x,v.y);
+    }
+
+    public Vector(Point p) {
+        super(p.x, p.y);
+    }
+
     public double dotProduct(Vector vec) {
         return x * vec.x + y * vec.y;
     }
@@ -51,4 +59,5 @@ public class Vector extends Point{
     public Vector tangent() {
         return new Vector(-y,x);
     }
+
 }

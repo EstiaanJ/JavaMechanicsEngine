@@ -46,6 +46,10 @@ public class Point {
         return Math.atan2(y,x);
     }
 
+    public Point rotateAboutOrigin(double angle){
+        return new Point(rotatePoint(0,0,angle,this));
+    }
+
     public float xFloat(){
         return (float) x;
     }
@@ -65,5 +69,35 @@ public class Point {
 
     public Point copy() {
         return new Point(this.x,this.y);
+    }
+
+    public Vector asVector() {
+        return new Vector(this.x,this.y);
+    }
+
+    /*
+    Adapted from:
+    twe4ked, Nils Pipenbrinck
+    Stack Overflow 2022
+    https://stackoverflow.com/questions/2259476/rotating-a-point-about-another-point-2d
+     */
+    public static Point rotatePoint(double cx, double cy, double angle, Point p)
+    {
+        double newX;
+        double newY;
+
+        double sine = Math.sin(angle);
+        double cosine = Math.cos(angle);
+
+        // translate point to origin:
+        newX = p.x - cx;
+        newY = p.y - cy;
+        //Point returnPoint = new Point(p.x - cx,p.y - cy);
+
+        // rotate point
+        newX = newX * cosine - newY * sine;
+        newY = newX * sine + newY * cosine;
+
+        return new Point(newX + cx, newY + cy);
     }
 }
