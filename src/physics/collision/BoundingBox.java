@@ -7,6 +7,8 @@ public class BoundingBox extends MechanicsCore {
     public final double width;
     public final double height;
 
+    private double angle;
+
     public double getAngle() {
         return angle;
     }
@@ -15,7 +17,7 @@ public class BoundingBox extends MechanicsCore {
         this.angle = angle;
     }
 
-    private double angle;
+
 
 
     public BoundingBox(Point position, double width, double height) {
