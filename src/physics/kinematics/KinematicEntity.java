@@ -1,8 +1,54 @@
 package physics.kinematics;
 
+import maths.Point;
 import maths.Vector;
+import physics.MechanicsCore;
 
-public class KinematicEntity {
+import java.util.ArrayList;
+
+public class KinematicEntity extends MechanicsCore {
+    private Vector velocity;
+    private Vector acceleration;
+    private Vector angularVelocity;
+    private Vector angularAcceleration;
+    private Vector netForce;
+    public final double mass;
+
+    public KinematicEntity(Point point, double mass) {
+        this.position = point;
+        this.mass = mass;
+        velocity = new Vector(0,0);
+        acceleration = new Vector(0,0);
+        netForce = new Vector(0,0);
+    }
+
+    public void stepPhysics(double dt){
+        stepAcceleration();
+        stepVelocity(dt);
+        stepPosition(dt);
+    }
+
+
+    private void stepAcceleration(){
+        //F = ma -> a = F/m
+        acceleration = netForce.scale(1/mass);
+    }
+
+
+    private void stepVelocity(double dt){
+        velocity = velocity.add(acceleration.scale(dt));
+    }
+
+
+    private void stepPosition(double dt){
+        double nx = position.x + (velocity.x * dt);
+        double ny = position.y + (velocity.y * dt);
+        position = new Vector(nx,ny);
+    }
+
+
+
+
     public Vector getVelocity() {
         return velocity;
     }
@@ -35,14 +81,19 @@ public class KinematicEntity {
         this.angularAcceleration = angularAcceleration;
     }
 
-    public KinematicEntity(Vector velocity) {
-        this.velocity = velocity;
+    public float getX(){
+        return this.position.xFloat();
     }
 
-    private Vector velocity;
-    private Vector acceleration;
-    private Vector angularVelocity;
-    private Vector angularAcceleration;
+    public float getY(){
+        return this.position.yFloat();
+    }
 
+    public Vector getNetForce() {
+        return netForce;
+    }
 
+    public void setNetForce(Vector netForce) {
+        this.netForce = netForce;
+    }
 }
