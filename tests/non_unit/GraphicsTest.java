@@ -3,12 +3,21 @@ package non_unit;
 import maths.Point;
 import maths.Vector;
 import physics.kinematics.KinematicEntity;
+import physics.kinematics.KinematicEntityF;
+import physics.kinematics.World;
 import processing.core.PApplet;
+
+import java.util.ArrayList;
 
 
 public class GraphicsTest extends PApplet {
     private AABB_Debug debug = new AABB_Debug(new Point(400,400),100,60);
-    private KinematicEntity ke = new KinematicEntity(new Point(200,200),10);
+    //(Point point, Vector velocity, Vector netForce, double mass)
+    private KinematicEntityF ke = new KinematicEntityF(new Point(100,100), new Vector(0,0),new Vector(0,0),10);
+    private ArrayList<KinematicEntityF> entityList = new ArrayList<>();
+    private World world = new World();
+    int frameItter = 0;
+
 
     public static void main(String[] args) {
         PApplet.main(new String[]{"non_unit.GraphicsTest"});
@@ -24,21 +33,36 @@ public class GraphicsTest extends PApplet {
         println("X-Min: " + debug.getXMin());
         println("Y-Max: " + debug.getYMax());
         println("X-Min: " + debug.getYMin());
-        ke.setNetForce(new Vector(100,0));
+        //ke.setNetForce(new Vector(100,0));
 
     }
 
     public void draw() {
         background(0);
+        frameItter++;
         //debug.setPos(new Point(mouseX,mouseY));
         debug.setAngle((mouseX - 100)/100.0);
         debug.draw(this);
         drawCursor();
-        ke.stepPhysics(1.0/60.0);
-        circle(ke.getX(),ke.getY(),10);
 
-        text("SPD: " + ke.getVelocity().magnitude(),20,20);
-        text("ACC: " + ke.getAcceleration().magnitude(),20,50);
+        world.stepPhysics(1/60.0);
+
+        for (Point p :world.getPositions()
+             ) {
+            circle(p.xFloat(),p.yFloat(),10);
+        }
+
+
+
+
+
+        text("SPD: " + ke.velocity.magnitude(),20,20);
+        //text("ACC: " + ke..magnitude(),20,50);
+
+        if(frameItter > 60){
+            frameItter = 0;
+            System.out.println("FPS: " + frameRate);
+        }
 
     }
 
@@ -52,6 +76,8 @@ public class GraphicsTest extends PApplet {
     public void mousePressed(){
         if(debug.isInside(new Point(mouseX,mouseY))){
             println("INSIDE| mx: " + mouseX + " || my: " + mouseY);
+        } else {
+            //world.add(new KinematicEntityF(new Point(mouseX,mouseY), new Vector(0,0),new Vector(0,0),10));
         }
     }
 }
