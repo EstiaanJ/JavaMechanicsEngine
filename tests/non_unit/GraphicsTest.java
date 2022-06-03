@@ -1,10 +1,9 @@
 package non_unit;
 
-import maths.Point;
-import maths.Vector;
-import physics.kinematics.KinematicEntity;
-import physics.kinematics.KinematicEntityF;
-import physics.kinematics.World;
+import ejvr.maths.Point;
+import ejvr.maths.Vector;
+import ejvr.physics.kinematics.KinematicEntityImmutable;
+import ejvr.physics.kinematics.World;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ import java.util.ArrayList;
 public class GraphicsTest extends PApplet {
     private AABB_Debug debug = new AABB_Debug(new Point(400,400),100,60);
     //(Point point, Vector velocity, Vector netForce, double mass)
-    private KinematicEntityF ke = new KinematicEntityF(new Point(100,100), new Vector(0,0),new Vector(0,0),10);
-    private ArrayList<KinematicEntityF> entityList = new ArrayList<>();
+    private KinematicEntityImmutable ke = new KinematicEntityImmutable(new Point(100,100), new Vector(0,0),new Vector(0,0),10);
+    private ArrayList<KinematicEntityImmutable> entityList = new ArrayList<>();
     private World world = new World();
     int frameItter = 0;
 
@@ -46,6 +45,8 @@ public class GraphicsTest extends PApplet {
         drawCursor();
 
         world.stepPhysics(1/60.0);
+
+
 
         for (Point p :world.getPositions()
              ) {

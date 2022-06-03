@@ -1,6 +1,7 @@
 package physics.collision;
 
-import maths.Point;
+import ejvr.maths.Point;
+import ejvr.physics.collision.AABB;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

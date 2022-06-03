@@ -1,5 +1,7 @@
 package maths;
 
+import ejvr.maths.Point;
+
 import static org.junit.jupiter.api.Assertions.*;
 //import static org.junit.
 

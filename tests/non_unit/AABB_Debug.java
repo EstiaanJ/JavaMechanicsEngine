@@ -1,7 +1,7 @@
 package non_unit;
 
-import maths.Point;
-import physics.collision.AABB;
+import ejvr.maths.Point;
+import ejvr.physics.collision.AABB;
 import processing.core.PApplet;
 
 public class AABB_Debug extends AABB {
