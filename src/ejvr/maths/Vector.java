@@ -60,4 +60,8 @@ public class Vector extends Point{
         return new Vector(-y,x);
     }
 
+    public String toString(){
+        return ("r: " + super.radius() + " x: " + x + " y: " + y);
+    }
+
 }

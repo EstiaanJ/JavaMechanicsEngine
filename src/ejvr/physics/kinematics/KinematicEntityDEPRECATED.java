@@ -4,7 +4,7 @@ import ejvr.maths.Point;
 import ejvr.physics.MechanicsCore;
 import ejvr.maths.Vector;
 
-public class KinematicEntity extends MechanicsCore {
+public class KinematicEntityDEPRECATED extends MechanicsCore {
     private Vector velocity;
     private Vector acceleration;
     private Vector angularVelocity;
@@ -12,7 +12,7 @@ public class KinematicEntity extends MechanicsCore {
     private Vector netForce;
     public final double mass;
 
-    public KinematicEntity(Point point, double mass) {
+    public KinematicEntityDEPRECATED(Point point, double mass) {
         this.position = point;
         this.mass = mass;
         velocity = new Vector(0,0);
