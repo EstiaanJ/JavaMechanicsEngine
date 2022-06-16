@@ -110,15 +110,15 @@ public class WorldState {
     }
 
 
-    public WorldState addCircularCollider(double mass, double density, Vector position, Vector velocity) {
+    public WorldState addCircularCollider(double size, Vector position, Vector velocity) {
         ArrayList<CircularCollider> newColliderList = new ArrayList<>();
         if (colliderList.length > 0) {
             for (CircularCollider colliderInOriginal : colliderList) {
                 newColliderList.add(colliderInOriginal);
             }
         }
-        KinematicBody newKinematicBody = new KinematicBody(position, velocity, mass);
-        CircularCollider newCollider = new CircularCollider(colliderList.length, mass / density, newKinematicBody);
+        KinematicBody newKinematicBody = new KinematicBody(position, velocity, size);
+        CircularCollider newCollider = new CircularCollider(colliderList.length, size, newKinematicBody);
         newColliderList.add(newCollider);
         return new WorldState(newColliderList.toArray(new CircularCollider[newColliderList.size()]));
     }

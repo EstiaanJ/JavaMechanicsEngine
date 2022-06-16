@@ -48,7 +48,7 @@ public class GraphicsTest extends PApplet {
         for(int i =0; i < 90; i++){
             Vector pos = new Vector(ThreadLocalRandom.current().nextDouble(0,800),ThreadLocalRandom.current().nextDouble(0,800));
             Vector velocity = new Vector(ThreadLocalRandom.current().nextDouble(-100,100),ThreadLocalRandom.current().nextDouble(-20,20));
-            worldState = worldState.addCircularCollider(ThreadLocalRandom.current().nextDouble(5,40),1,pos,velocity);
+            worldState = worldState.addCircularCollider(ThreadLocalRandom.current().nextDouble(5,40),pos,velocity);
         }
         motionThread.setWorldState(worldState);
         motionThread2.start();
@@ -86,7 +86,7 @@ public class GraphicsTest extends PApplet {
         if(debug.isInside(new Point(mouseX,mouseY))){
             println("INSIDE| mx: " + mouseX + " || my: " + mouseY);
         } else {
-            worldState = worldState.addCircularCollider(10,10,new Vector(mouseX,mouseY),new Vector(0,0));
+            worldState = worldState.addCircularCollider(10,new Vector(mouseX,mouseY),new Vector(0,0));
             motionThread.setWorldState(worldState);
         }
     }
