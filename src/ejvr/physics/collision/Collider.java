@@ -7,7 +7,6 @@ public class Collider extends KinematicBody {
     public final AABB aabb;
     public final int id;
 
-
     public Collider(int id, KinematicBody body, double height, double width) {
         super(body);
         this.id = id;

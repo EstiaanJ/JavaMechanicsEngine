@@ -13,6 +13,11 @@ public class CircularCollider extends Collider{
         this.radius = radius;
     }
 
+    public CircularCollider(CircularCollider cc) {
+        super(cc.id, cc, cc.radius * 2, cc.radius * 2);
+        this.radius = cc.radius;
+    }
+
     public static CircularColliderPair solveCollision(CircularColliderPair pair){
         var distance = overlapDistance(pair.one(),pair.two());
         var normal = new Vector((pair.two().pos().x - pair.one().pos().x)/ distance,

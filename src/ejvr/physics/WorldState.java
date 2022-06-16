@@ -7,11 +7,12 @@ import ejvr.physics.collision.Collider;
 import ejvr.physics.kinematics.KinematicBody;
 import processing.core.PApplet;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public final class WorldState {
+public class WorldState {
     public static final int CLAMP_X_MAX = 800;
     public static final int CLAMP_Y_MAX = 800;
     public static final int CLAMP_X_MIN = 0;
@@ -56,6 +57,8 @@ public final class WorldState {
             graphics.popMatrix();
         }
     }
+
+    public void stepFrame(PApplet graphics, Method method) {}
 
     private CircularCollider[] resolveCollisions() {
         CollisionIDPair[] collisions = detectIntersections(colliderList);
@@ -120,6 +123,7 @@ public final class WorldState {
         return new WorldState(newColliderList.toArray(new CircularCollider[newColliderList.size()]));
     }
 
+
     public CircularCollider[] colliderList() {
         return colliderList;
     }
@@ -142,5 +146,7 @@ public final class WorldState {
         return "WorldState[" +
                 "colliderList=" + colliderList + ']';
     }
+
+
 
 }

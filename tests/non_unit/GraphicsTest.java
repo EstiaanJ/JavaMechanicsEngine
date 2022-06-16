@@ -21,8 +21,7 @@ public class GraphicsTest extends PApplet {
     //private World world = new World();
     int frameItter = 0;
     private WorldState worldState = new WorldState(new CircularCollider[0]);
-    private ArrayList<KinematicBody> keList;
-    private ArrayList<CircularCollider> ceList;
+
 
     //private CollisionThread collisionThread = new CollisionThread(worldState);
     private MotionThread motionThread = new MotionThread( worldState);
