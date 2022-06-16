@@ -31,7 +31,7 @@ public class WorldState {
     private CircularCollider[] stepKinematics(double deltaTime) {
         ArrayList<CircularCollider> returnList = new ArrayList<>();
         for (CircularCollider entity : colliderList) {
-            KinematicBody body = entity.stepPhysics(deltaTime, new Vector(0, 300));
+            KinematicBody body = entity.stepPhysics(deltaTime, new Vector(0, 0));
             returnList.add(new CircularCollider(entity.id, entity.radius, body));
         }
         CircularCollider[] ret = new CircularCollider[returnList.size()];
