@@ -3,7 +3,6 @@ package ejvr.physics;
 import ejvr.maths.Vector;
 import ejvr.physics.collision.CircularCollider;
 import ejvr.physics.collision.CircularColliderPair;
-import ejvr.physics.collision.Collider;
 import ejvr.physics.kinematics.KinematicBody;
 import processing.core.PApplet;
 
@@ -23,7 +22,7 @@ public class WorldState {
     public WorldState(CircularCollider[] colliderList) {
         ArrayList<CircularCollider> list = new ArrayList<>();
         for(CircularCollider collider : colliderList) {
-            list.add(new CircularCollider(collider.id, collider.radius, new KinematicBody(collider.position, collider.velocity, collider.mass)));
+            list.add(new CircularCollider(collider.id, collider.radius, new KinematicBody(collider.position, collider.velocity, new Vector(0,0), collider.mass)));
         }
         this.colliderList = list.toArray(new CircularCollider[list.size()]);
     }
@@ -31,7 +30,8 @@ public class WorldState {
     private CircularCollider[] stepKinematics(double deltaTime) {
         ArrayList<CircularCollider> returnList = new ArrayList<>();
         for (CircularCollider entity : colliderList) {
-            KinematicBody body = entity.stepPhysics(deltaTime, new Vector(0, 0));
+            Vector netForce = new Vector(0,0);
+            KinematicBody body = entity.stepPhysics(deltaTime,netForce);
             returnList.add(new CircularCollider(entity.id, entity.radius, body));
         }
         CircularCollider[] ret = new CircularCollider[returnList.size()];
@@ -43,6 +43,7 @@ public class WorldState {
     }
 
     public WorldState stepMotion(double deltaTime) {
+
         return new WorldState(stepKinematics(deltaTime));
     }
 
@@ -117,7 +118,7 @@ public class WorldState {
                 newColliderList.add(colliderInOriginal);
             }
         }
-        KinematicBody newKinematicBody = new KinematicBody(position, velocity, size);
+        KinematicBody newKinematicBody = new KinematicBody(position, velocity, new Vector(0,0), size);
         CircularCollider newCollider = new CircularCollider(colliderList.length, size, newKinematicBody);
         newColliderList.add(newCollider);
         return new WorldState(newColliderList.toArray(new CircularCollider[newColliderList.size()]));
