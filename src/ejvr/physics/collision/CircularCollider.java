@@ -67,4 +67,9 @@ public class CircularCollider extends Collider{
     public CircularCollider byPosition(Point position){
         return new CircularCollider(this.id, this.radius,super.byPosition(position));
     }
+
+    @Override
+    public CircularCollider addForce(Vector forceToAdd){
+        return new CircularCollider(this.id,this.radius,super.addForce(forceToAdd));
+    }
 }

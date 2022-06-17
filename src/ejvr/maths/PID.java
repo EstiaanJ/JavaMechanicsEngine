@@ -20,5 +20,9 @@ public record PID (double lastError, double lastIntegral, double K_p, double K_i
     public double signal(double target, double actual, double dt){
         return K_p * error(target,actual) + K_i * integral(target,actual,dt) + K_D * derivative(target,actual,dt);
     }
+
+    public static PID zero(){
+        return new PID(0,0,1,1,1);
+    }
 }
 

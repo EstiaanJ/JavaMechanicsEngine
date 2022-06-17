@@ -8,6 +8,7 @@ import processing.core.PApplet;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -22,9 +23,17 @@ public class WorldState {
     public WorldState(CircularCollider[] colliderList) {
         ArrayList<CircularCollider> list = new ArrayList<>();
         for(CircularCollider collider : colliderList) {
-            list.add(new CircularCollider(collider.id, collider.radius, new KinematicBody(collider.position, collider.velocity, new Vector(0,0), collider.mass)));
+            list.add(new CircularCollider(collider.id, collider.radius, new KinematicBody(collider.position, collider.velocity, collider.netForce, collider.mass)));
         }
         this.colliderList = list.toArray(new CircularCollider[list.size()]);
+    }
+
+    public WorldState(WorldState worldState){
+        ArrayList<CircularCollider> colliders = new ArrayList<>();
+        for(CircularCollider collider : worldState.colliderList){
+            colliders.add(collider);
+        }
+        colliderList = colliders.toArray(new CircularCollider[colliders.size()]);
     }
 
     private CircularCollider[] stepKinematics(double deltaTime) {
@@ -146,6 +155,18 @@ public class WorldState {
     public String toString() {
         return "WorldState[" +
                 "colliderList=" + colliderList + ']';
+    }
+
+    public WorldState replaceEntity(CircularCollider collider, int id) {
+        ArrayList<CircularCollider> colliders = new ArrayList<>();
+        for(int i = 0; i < colliderList.length; i++){
+            if(i == id){
+                colliders.add(collider);
+            } else {
+                colliders.add(colliderList[i]);
+            }
+        }
+        return new WorldState(colliders.toArray(new CircularCollider[colliders.size()]));
     }
 
 

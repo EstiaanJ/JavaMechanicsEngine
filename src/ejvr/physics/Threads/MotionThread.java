@@ -12,11 +12,11 @@ public class MotionThread implements Runnable{
         lasTime = System.nanoTime();
     }
 
-    public WorldState getWorldState() {
+    synchronized public WorldState getWorldState() {
         return new WorldState(this.worldState.colliderList());
     }
 
-    public void setWorldState(WorldState worldState) {
+    synchronized public void setWorldState(WorldState worldState) {
         this.worldState = worldState;
     }
 
