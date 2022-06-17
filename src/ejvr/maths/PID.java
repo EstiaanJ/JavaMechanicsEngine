@@ -1,27 +1,24 @@
 package ejvr.maths;
 
-public class PID {
-    private double lastError = 0;
-    private double lastIntegral = 0;
-
-    public final double K_p;
-    public final double K_i;
-    public final double K_D;
-    public final double bias = 0;
-
-    public PID(double k_p, double k_i, double k_d) {
-        K_p = k_p;
-        K_i = k_i;
-        K_D = k_d;
+public record PID (double lastError, double lastIntegral, double K_p, double K_i, double K_D) {
+    public PID step(double target, double actual, double dt){
+        return new PID(error(target,actual),integral(target,actual,dt),K_p,K_i,K_D);
     }
 
-    public double getSignal(double target, double actual, double dt){
-        var error = target-actual;
-        var integral = lastIntegral + error * dt;
-        var derivative = (error - lastError)/dt;
-        double output = K_p * error + K_i * integral + K_D * derivative + bias;
-        lastError = error;
-        lastIntegral = integral;
-        return output;
+    private double error (double target, double actual) {
+        return target - actual;
+    }
+
+    private double derivative(double target, double actual, double dt){
+        return (error(target,actual) - lastError)/dt;
+    }
+
+    private double integral(double target, double actual, double dt) {
+        return lastIntegral + error(target,actual) * dt;
+    }
+
+    public double signal(double target, double actual, double dt){
+        return K_p * error(target,actual) + K_i * integral(target,actual,dt) + K_D * derivative(target,actual,dt);
     }
 }
+
