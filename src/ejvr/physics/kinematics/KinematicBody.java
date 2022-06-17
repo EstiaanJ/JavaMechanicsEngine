@@ -25,7 +25,7 @@ public class KinematicBody {
         this.netForce = body.netForce;
     }
 
-    public KinematicBody stepPhysics(double dt, Vector netForce){
+    public KinematicBody stepPhysics(double dt){
         Vector newVelocity = stepVelocity(dt, stepAcceleration(netForce));
         Vector newPos = stepPosition(dt, this.position, newVelocity);
         KinematicBody newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);

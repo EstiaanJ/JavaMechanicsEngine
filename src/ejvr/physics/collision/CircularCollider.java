@@ -72,4 +72,9 @@ public class CircularCollider extends Collider{
     public CircularCollider addForce(Vector forceToAdd){
         return new CircularCollider(this.id,this.radius,super.addForce(forceToAdd));
     }
+
+    @Override
+    public CircularCollider byNetForce(Vector newNet){
+        return new CircularCollider(this.id,this.radius,super.byNetForce(newNet));
+    }
 }
