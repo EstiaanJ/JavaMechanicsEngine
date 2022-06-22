@@ -1,11 +1,12 @@
 package ejvr.physics.collision;
 
-import ejvr.maths.Point;
-import ejvr.maths.Vector;
+import ejvr.math.real.PID;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.kinematics.KinematicBody;
 
 public class CircularCollider extends Collider{
 
+    public static final PID pid = null;
     public final double radius;
 
     public CircularCollider(int id, double radius, KinematicBody body){
@@ -20,8 +21,8 @@ public class CircularCollider extends Collider{
 
     public static CircularColliderPair solveCollision(CircularColliderPair pair){
         var distance = overlapDistance(pair.one(),pair.two());
-        var normal = new Vector((pair.two().pos().x - pair.one().pos().x)/ distance,
-                                (pair.two().pos().y - pair.one().pos().y)/ distance);
+        var normal = new VectorDouble((pair.two().pos().x() - pair.one().pos().x())/ distance,
+                                (pair.two().pos().y() - pair.one().pos().y())/ distance);
         var tangent = normal.tangent();
 
         var dotProductTanOne = pair.one().velocity.dotProduct(tangent);
@@ -34,13 +35,13 @@ public class CircularCollider extends Collider{
         var momentumTwo = (dotProductNormTwo * (pair.two().mass - pair.one().mass) + 2 * pair.one().mass * dotProductNormOne) / (pair.one().mass + pair.two().mass);
 
         return new CircularColliderPair(
-                pair.one().byVelocity(new Vector(tangent.x * dotProductTanOne + normal.x * momentumOne, tangent.y * dotProductTanOne + normal.y * momentumOne).scale(0.98)),
-                pair.two().byVelocity(new Vector(tangent.x * dotProductTanTwo + normal.x * momentumTwo, tangent.y * dotProductTanTwo + normal.y * momentumTwo).scale(0.98))
+                pair.one().byVelocity(new VectorDouble(tangent.x() * dotProductTanOne + normal.x() * momentumOne, tangent.y() * dotProductTanOne + normal.y() * momentumOne).scale(0.98)),
+                pair.two().byVelocity(new VectorDouble(tangent.x() * dotProductTanTwo + normal.x() * momentumTwo, tangent.y() * dotProductTanTwo + normal.y() * momentumTwo).scale(0.98))
         );
     }
 
     private static double overlapDistanceSquared(CircularCollider one, CircularCollider two) {
-        return ((one.pos().x - two.pos().x) * (one.pos().x - two.pos().x)) + ((one.pos().y - two.pos().y) * (one.pos().y - two.pos().y));
+        return ((one.pos().x() - two.pos().x()) * (one.pos().x() - two.pos().x())) + ((one.pos().y() - two.pos().y()) * (one.pos().y() - two.pos().y()));
     }
 
     public static double overlapDistance(CircularCollider one, CircularCollider two) {
@@ -52,7 +53,7 @@ public class CircularCollider extends Collider{
         return overlapDistanceSquared(entityOne,entityTwo) <= radSqr;
     }
 
-    public boolean isInside(Point point){
+    public boolean isInside(VectorDouble point){
         boolean returnVal = false;
         if(aabb.isInside(point)){
             if(this.aabb.getPos().distanceBetween(point) < radius) returnVal = true;
@@ -60,16 +61,16 @@ public class CircularCollider extends Collider{
         return returnVal;
     }
 
-    public CircularCollider byVelocity(Vector velocity){
+    public CircularCollider byVelocity(VectorDouble velocity){
         return new CircularCollider(this.id, this.radius,super.byVelocity(velocity));
     }
 
-    public CircularCollider byPosition(Point position){
+    public CircularCollider byPosition(VectorDouble position){
         return new CircularCollider(this.id, this.radius,super.byPosition(position));
     }
 
     @Override
-    public CircularCollider addForce(Vector forceToAdd){
+    public CircularCollider addForce(VectorDouble forceToAdd){
         return new CircularCollider(this.id,this.radius,super.addForce(forceToAdd));
     }
 }

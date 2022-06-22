@@ -1,17 +1,18 @@
-package maths;
+package math;
 
-import ejvr.maths.Vector;
+
+import ejvr.math.real.VectorDouble;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VectorTest {
+class VectorDoubleTest {
 
-    private Vector a = new Vector(1,1);
-    private Vector b = new Vector(0.00001,-0.00002);
-    private Vector c = new Vector(-1,-2);
-    private Vector e = new Vector(1,-1);
-    private Vector f= new Vector(-0.0000001,1000000);
+    private VectorDouble a = new VectorDouble(1,1);
+    private VectorDouble b = new VectorDouble(0.00001,-0.00002);
+    private VectorDouble c = new VectorDouble(-1,-2);
+    private VectorDouble e = new VectorDouble(1,-1);
+    private VectorDouble f= new VectorDouble(-0.0000001,1000000);
 
     @Test
     void dotProduct() {
@@ -22,7 +23,7 @@ class VectorTest {
 
     @Test
     void crossProduct() {
-        assertEquals(-1,a.crossProduct(c));
+        assertEquals(-1,a.crossProduct2D(c));
     }
 
     @Test

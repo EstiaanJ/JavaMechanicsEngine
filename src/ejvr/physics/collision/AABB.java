@@ -1,6 +1,6 @@
 package ejvr.physics.collision;
 
-import ejvr.maths.Point;
+import ejvr.math.real.VectorDouble;
 
 
 public class AABB extends BoundingBox{
@@ -8,7 +8,7 @@ public class AABB extends BoundingBox{
     private double totalWidth;
     private double totalHeight;
 
-    public AABB(Point position, double width, double height) {
+    public AABB(VectorDouble position, double width, double height) {
         super(position, width, height);
         updateTotalWidth();
         updateTotalHeight();
@@ -30,7 +30,7 @@ public class AABB extends BoundingBox{
             updateTotalWidth();
         }
         //updateTotalWidth();
-        return super.position.x + (totalWidth/2.0);
+        return super.position.x() + (totalWidth/2.0);
     }
 
     public double getXMin() {
@@ -38,7 +38,7 @@ public class AABB extends BoundingBox{
             updateTotalWidth();
         }
         //updateTotalWidth();
-        return super.position.x - (totalWidth/2.0);
+        return super.position.x() - (totalWidth/2.0);
     }
 
     public double getYMax() {
@@ -46,7 +46,7 @@ public class AABB extends BoundingBox{
             updateTotalHeight();
         }
         updateTotalHeight();
-        return super.position.y + (totalHeight/2.0);
+        return super.position.y() + (totalHeight/2.0);
     }
 
     public double getYMin() {
@@ -54,11 +54,11 @@ public class AABB extends BoundingBox{
             updateTotalHeight();
         }
         //updateTotalHeight();
-        return super.position.y - (totalHeight/2.0);
+        return super.position.y() - (totalHeight/2.0);
     }
 
-    public boolean isInside(Point p){
-        if(p.x > this.getXMin() && p.x < this.getXMax() && p.y > this.getYMin() && p.y < this.getYMax()) {
+    public boolean isInside(VectorDouble p){
+        if(p.x() > this.getXMin() && p.x() < this.getXMax() && p.y() > this.getYMin() && p.y() < this.getYMax()) {
             return true;
         } else {
             return false;

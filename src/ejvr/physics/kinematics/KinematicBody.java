@@ -1,17 +1,16 @@
 package ejvr.physics.kinematics;
 
-import ejvr.maths.Point;
-import ejvr.maths.Vector;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.WorldState;
 
 public class KinematicBody {
 
-    public final Point position;
-    public final Vector velocity;
-    public final Vector netForce;
+    public final VectorDouble position;
+    public final VectorDouble velocity;
+    public final VectorDouble netForce;
     public final double mass;
 
-    public KinematicBody(Point point, Vector velocity, Vector netForce, double mass) {
+    public KinematicBody(VectorDouble point, VectorDouble velocity, VectorDouble netForce, double mass) {
         this.position = point;
         this.velocity = velocity;
         this.netForce = netForce;
@@ -25,19 +24,19 @@ public class KinematicBody {
         this.netForce = body.netForce;
     }
 
-    public KinematicBody stepPhysics(double dt, Vector netForce){
-        Vector newVelocity = stepVelocity(dt, stepAcceleration(netForce));
-        Vector newPos = stepPosition(dt, this.position, newVelocity);
+    public KinematicBody stepPhysics(double dt, VectorDouble netForce){
+        VectorDouble newVelocity = stepVelocity(dt, stepAcceleration(netForce));
+        VectorDouble newPos = stepPosition(dt, this.position, newVelocity);
         KinematicBody newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);
-        if(position.x > WorldState.CLAMP_X_MAX || position.x < WorldState.CLAMP_X_MIN) {
+        if(position.x() > WorldState.CLAMP_X_MAX || position.x() < WorldState.CLAMP_X_MIN) {
             newVelocity = stepVelocity(dt, stepAcceleration(netForce));
-            newVelocity = new Vector(-newVelocity.x,newVelocity.y);
+            newVelocity = new VectorDouble(-newVelocity.x(),newVelocity.y());
             newPos = stepPosition(dt, this.position, newVelocity);
             newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);
         }
-        if(position.y > WorldState.CLAMP_Y_MAX || position.y < WorldState.CLAMP_Y_MIN) {
+        if(position.y() > WorldState.CLAMP_Y_MAX || position.y() < WorldState.CLAMP_Y_MIN) {
             newVelocity = stepVelocity(dt, stepAcceleration(netForce));
-            newVelocity = new Vector(newVelocity.x, -newVelocity.y);
+            newVelocity = new VectorDouble(newVelocity.x(), -newVelocity.y());
             newPos = stepPosition(dt, this.position, newVelocity);
             newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);
         }
@@ -45,32 +44,32 @@ public class KinematicBody {
     }
 
 
-    private Vector stepAcceleration(Vector netForce){
+    private VectorDouble stepAcceleration(VectorDouble netForce){
         //F = ma -> a = F/m
-        return new Vector(netForce.scale(1.0/mass));
+        return new VectorDouble(netForce.scale(1.0/mass));
     }
 
-    private Vector stepVelocity(double dt, Vector accelIn){
+    private VectorDouble stepVelocity(double dt, VectorDouble accelIn){
         return velocity.add(accelIn.scale(dt));
     }
 
-    private Vector stepPosition(double dt, Point positionIn, Vector velIn){
-        return positionIn.asVector().add(velIn.scale(dt));
+    private VectorDouble stepPosition(double dt, VectorDouble positionIn, VectorDouble velIn){
+        return positionIn.add(velIn.scale(dt));
     }
 
-    public KinematicBody byVelocity(Vector velocity){
+    public KinematicBody byVelocity(VectorDouble velocity){
         return new KinematicBody(this.position,velocity, netForce, this.mass);
     }
 
-    public KinematicBody byPosition(Point position){
+    public KinematicBody byPosition(VectorDouble position){
         return new KinematicBody(position,this.velocity, netForce, this.mass);
     }
 
-    public KinematicBody byNetForce(Vector newNetForce) {
+    public KinematicBody byNetForce(VectorDouble newNetForce) {
         return new KinematicBody(this.position,this.velocity,newNetForce,this.mass);
     }
 
-    public KinematicBody addForce(Vector additionalForce){
+    public KinematicBody addForce(VectorDouble additionalForce){
         return new KinematicBody(this.position,this.velocity,this.netForce.add(additionalForce),this.mass);
     }
 

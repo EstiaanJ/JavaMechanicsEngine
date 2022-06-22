@@ -1,6 +1,6 @@
 package ejvr.physics.collision;
 
-import ejvr.maths.Point;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.MechanicsCore;
 
 public class BoundingBox extends MechanicsCore {
@@ -20,11 +20,11 @@ public class BoundingBox extends MechanicsCore {
 
 
 
-    public BoundingBox(Point position, double width, double height) {
+    public BoundingBox(VectorDouble position, double width, double height) {
         super.position = position;
         this.width = width;
         this.height = height;
-        double angle = 0;
+        double angle = 0; //TODO: what
     }
 
 

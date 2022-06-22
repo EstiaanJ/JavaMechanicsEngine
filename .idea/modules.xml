@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JavaMechanicsEngine.iml" filepath="$PROJECT_DIR$/JavaMechanicsEngine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../math/math.iml" filepath="$PROJECT_DIR$/../math/math.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,6 @@
 package ejvr.physics.kinematics;
 
-import ejvr.maths.Vector;
+import ejvr.math.real.VectorDouble;
 
 public class Worker extends Thread{
     private KinematicBody entityF;
@@ -8,7 +8,7 @@ public class Worker extends Thread{
 
     public void run(KinematicBody inEntity, Double dt) {
         done = false;
-        entityF = inEntity.stepPhysics(dt, new Vector(0,100));
+        entityF = inEntity.stepPhysics(dt, new VectorDouble(0,100));
         done = true;
     }
 

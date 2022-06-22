@@ -1,6 +1,6 @@
 package ejvr.physics;
 
-import ejvr.maths.Vector;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.collision.CircularCollider;
 import ejvr.physics.collision.CircularColliderPair;
 import ejvr.physics.kinematics.KinematicBody;
@@ -8,7 +8,6 @@ import processing.core.PApplet;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -39,7 +38,7 @@ public class WorldState {
     private CircularCollider[] stepKinematics(double deltaTime) {
         ArrayList<CircularCollider> returnList = new ArrayList<>();
         for (CircularCollider entity : colliderList) {
-            Vector netForce = new Vector(0,0);
+            VectorDouble netForce = new VectorDouble(0,0);
             KinematicBody body = entity.stepPhysics(deltaTime,netForce);
             returnList.add(new CircularCollider(entity.id, entity.radius, body));
         }
@@ -120,14 +119,14 @@ public class WorldState {
     }
 
 
-    public WorldState addCircularCollider(double size, Vector position, Vector velocity) {
+    public WorldState addCircularCollider(double size, VectorDouble position, VectorDouble velocity) {
         ArrayList<CircularCollider> newColliderList = new ArrayList<>();
         if (colliderList.length > 0) {
             for (CircularCollider colliderInOriginal : colliderList) {
                 newColliderList.add(colliderInOriginal);
             }
         }
-        KinematicBody newKinematicBody = new KinematicBody(position, velocity, new Vector(0,0), size);
+        KinematicBody newKinematicBody = new KinematicBody(position, velocity, new VectorDouble(0,0), size);
         CircularCollider newCollider = new CircularCollider(colliderList.length, size, newKinematicBody);
         newColliderList.add(newCollider);
         return new WorldState(newColliderList.toArray(new CircularCollider[newColliderList.size()]));

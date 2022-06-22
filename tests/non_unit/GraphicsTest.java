@@ -1,20 +1,16 @@
 package non_unit;
 
-import ejvr.maths.Point;
-import ejvr.maths.Vector;
-import ejvr.physics.Threads.CollisionThread;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.Threads.MotionThread;
 import ejvr.physics.WorldState;
 import ejvr.physics.collision.CircularCollider;
-import ejvr.physics.kinematics.KinematicBody;
 import processing.core.PApplet;
 
-import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 public class GraphicsTest extends PApplet {
-    private AABB_Debug debug = new AABB_Debug(new Point(400,400),100,60);
+    private AABB_Debug debug = new AABB_Debug(new VectorDouble(400,400),100,60);
     //(Point point, Vector velocity, Vector netForce, double mass)
     //private KinematicBody ke = new KinematicBody(new Point(100,100), new Vector(0,0),new Vector(0,0),10);
    //private ArrayList<KinematicBody> entityList = new ArrayList<>();
@@ -46,8 +42,8 @@ public class GraphicsTest extends PApplet {
         //ke.setNetForce(new Vector(100,0));
 
         for(int i =0; i < 90; i++){
-            Vector pos = new Vector(ThreadLocalRandom.current().nextDouble(0,800),ThreadLocalRandom.current().nextDouble(0,800));
-            Vector velocity = new Vector(ThreadLocalRandom.current().nextDouble(-100,100),ThreadLocalRandom.current().nextDouble(-20,20));
+            VectorDouble pos = new VectorDouble(ThreadLocalRandom.current().nextDouble(0,800),ThreadLocalRandom.current().nextDouble(0,800));
+            VectorDouble velocity = new VectorDouble(ThreadLocalRandom.current().nextDouble(-100,100),ThreadLocalRandom.current().nextDouble(-20,20));
             worldState = worldState.addCircularCollider(ThreadLocalRandom.current().nextDouble(5,40),pos,velocity);
         }
         motionThread.setWorldState(worldState);
@@ -83,10 +79,10 @@ public class GraphicsTest extends PApplet {
     }
 
     public void mousePressed(){
-        if(debug.isInside(new Point(mouseX,mouseY))){
+        if(debug.isInside(new VectorDouble(mouseX,mouseY))){
             println("INSIDE| mx: " + mouseX + " || my: " + mouseY);
         } else {
-            worldState = worldState.addCircularCollider(10,new Vector(mouseX,mouseY),new Vector(0,0));
+            worldState = worldState.addCircularCollider(10,new VectorDouble(mouseX,mouseY),new VectorDouble(0,0));
             motionThread.setWorldState(worldState);
         }
     }
