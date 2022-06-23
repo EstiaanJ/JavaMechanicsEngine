@@ -38,8 +38,7 @@ public class WorldState {
     private CircularCollider[] stepKinematics(double deltaTime) {
         ArrayList<CircularCollider> returnList = new ArrayList<>();
         for (CircularCollider entity : colliderList) {
-            VectorDouble netForce = new VectorDouble(0,0);
-            KinematicBody body = entity.stepPhysics(deltaTime,netForce);
+            KinematicBody body = entity.stepPhysics(deltaTime);
             returnList.add(new CircularCollider(entity.id, entity.radius, body));
         }
         CircularCollider[] ret = new CircularCollider[returnList.size()];
@@ -119,14 +118,14 @@ public class WorldState {
     }
 
 
-    public WorldState addCircularCollider(double size, VectorDouble position, VectorDouble velocity) {
+    public WorldState addCircularCollider(double size, VectorDouble position, VectorDouble velocity, VectorDouble netForce) {
         ArrayList<CircularCollider> newColliderList = new ArrayList<>();
         if (colliderList.length > 0) {
             for (CircularCollider colliderInOriginal : colliderList) {
                 newColliderList.add(colliderInOriginal);
             }
         }
-        KinematicBody newKinematicBody = new KinematicBody(position, velocity, new VectorDouble(0,0), size);
+        KinematicBody newKinematicBody = new KinematicBody(position, velocity, netForce, size);
         CircularCollider newCollider = new CircularCollider(colliderList.length, size, newKinematicBody);
         newColliderList.add(newCollider);
         return new WorldState(newColliderList.toArray(new CircularCollider[newColliderList.size()]));

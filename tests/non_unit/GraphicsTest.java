@@ -34,6 +34,7 @@ public class GraphicsTest extends PApplet {
     }
 
     public void setup() {
+        background(0);
         debug.setAngle(Math.PI/3);
         println("X-Max: " + debug.getXMax());
         println("X-Min: " + debug.getXMin());
@@ -41,30 +42,32 @@ public class GraphicsTest extends PApplet {
         println("X-Min: " + debug.getYMin());
         //ke.setNetForce(new Vector(100,0));
 
-        for(int i =0; i < 90; i++){
+        for(int i =0; i < 4; i++){
             VectorDouble pos = new VectorDouble(ThreadLocalRandom.current().nextDouble(0,800),ThreadLocalRandom.current().nextDouble(0,800));
             VectorDouble velocity = new VectorDouble(ThreadLocalRandom.current().nextDouble(-100,100),ThreadLocalRandom.current().nextDouble(-20,20));
-            worldState = worldState.addCircularCollider(ThreadLocalRandom.current().nextDouble(5,40),pos,velocity);
+            worldState = worldState.addCircularCollider(ThreadLocalRandom.current().nextDouble(5,40),pos,velocity, new VectorDouble(0,0));
         }
         motionThread.setWorldState(worldState);
         motionThread2.start();
     }
 
     public void draw() {
-        background(0);
+        fill(0,60);
+        rect(0,0,2000,2000);
+        //background(0);
         frameItter++;
         //debug.setPos(new Point(mouseX,mouseY));
         debug.setAngle((mouseX - 100)/100.0);
         debug.draw(this);
-        drawCursor();
+        //drawCursor();
 
-
-        if(frameItter > 60){
+        if(frameItter > 6){
             frameItter = 0;
             System.out.println("FPS: " + frameRate);
             System.out.println("N: " + worldState.colliderList().length);
 
         }
+
 
         this.worldState = motionThread.getWorldState();
         worldState.stepFrame(this);
@@ -82,8 +85,11 @@ public class GraphicsTest extends PApplet {
         if(debug.isInside(new VectorDouble(mouseX,mouseY))){
             println("INSIDE| mx: " + mouseX + " || my: " + mouseY);
         } else {
-            worldState = worldState.addCircularCollider(10,new VectorDouble(mouseX,mouseY),new VectorDouble(0,0));
-            motionThread.setWorldState(worldState);
+            for(int i = 0; i < 100; i++){
+                worldState = worldState.addCircularCollider(3,new VectorDouble(mouseX+(i*7)-400,mouseY + ThreadLocalRandom.current().nextDouble(-100,100)),new VectorDouble(ThreadLocalRandom.current().nextDouble(-800,800), ThreadLocalRandom.current().nextDouble(-800,800)), new VectorDouble(0,300));
+                motionThread.setWorldState(worldState);
+            }
+
         }
     }
 }

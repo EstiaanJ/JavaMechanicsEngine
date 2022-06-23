@@ -24,20 +24,28 @@ public class KinematicBody {
         this.netForce = body.netForce;
     }
 
-    public KinematicBody stepPhysics(double dt, VectorDouble netForce){
+    public KinematicBody stepPhysics(double dt){
         VectorDouble newVelocity = stepVelocity(dt, stepAcceleration(netForce));
         VectorDouble newPos = stepPosition(dt, this.position, newVelocity);
         KinematicBody newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);
         if(position.x() > WorldState.CLAMP_X_MAX || position.x() < WorldState.CLAMP_X_MIN) {
             newVelocity = stepVelocity(dt, stepAcceleration(netForce));
             newVelocity = new VectorDouble(-newVelocity.x(),newVelocity.y());
-            newPos = stepPosition(dt, this.position, newVelocity);
+            if(position.x() > WorldState.CLAMP_X_MAX) {
+                newPos = stepPosition(dt,new VectorDouble(WorldState.CLAMP_X_MAX - 0.1,position.y()),newVelocity);
+            } else {
+                newPos = stepPosition(dt,new VectorDouble(WorldState.CLAMP_X_MIN + 0.1,position.y()),newVelocity);
+            }
             newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);
         }
         if(position.y() > WorldState.CLAMP_Y_MAX || position.y() < WorldState.CLAMP_Y_MIN) {
             newVelocity = stepVelocity(dt, stepAcceleration(netForce));
             newVelocity = new VectorDouble(newVelocity.x(), -newVelocity.y());
-            newPos = stepPosition(dt, this.position, newVelocity);
+            if(position.y() > WorldState.CLAMP_Y_MAX) {
+                newPos = stepPosition(dt,new VectorDouble(position.x(),WorldState.CLAMP_Y_MAX - 1),newVelocity);
+            } else {
+                newPos = stepPosition(dt,new VectorDouble(position.x(),WorldState.CLAMP_Y_MIN + 0.1),newVelocity);
+            }
             newBody = new KinematicBody(newPos, newVelocity, netForce, this.mass);
         }
         return newBody;

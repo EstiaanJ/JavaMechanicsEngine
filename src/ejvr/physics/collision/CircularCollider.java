@@ -5,8 +5,8 @@ import ejvr.math.real.VectorDouble;
 import ejvr.physics.kinematics.KinematicBody;
 
 public class CircularCollider extends Collider{
+    public static final double RESTITUTION = 0.99;
 
-    public static final PID pid = null;
     public final double radius;
 
     public CircularCollider(int id, double radius, KinematicBody body){
@@ -35,8 +35,8 @@ public class CircularCollider extends Collider{
         var momentumTwo = (dotProductNormTwo * (pair.two().mass - pair.one().mass) + 2 * pair.one().mass * dotProductNormOne) / (pair.one().mass + pair.two().mass);
 
         return new CircularColliderPair(
-                pair.one().byVelocity(new VectorDouble(tangent.x() * dotProductTanOne + normal.x() * momentumOne, tangent.y() * dotProductTanOne + normal.y() * momentumOne).scale(0.98)),
-                pair.two().byVelocity(new VectorDouble(tangent.x() * dotProductTanTwo + normal.x() * momentumTwo, tangent.y() * dotProductTanTwo + normal.y() * momentumTwo).scale(0.98))
+                pair.one().byVelocity(new VectorDouble(tangent.x() * dotProductTanOne + normal.x() * momentumOne, tangent.y() * dotProductTanOne + normal.y() * momentumOne).scale(RESTITUTION)),
+                pair.two().byVelocity(new VectorDouble(tangent.x() * dotProductTanTwo + normal.x() * momentumTwo, tangent.y() * dotProductTanTwo + normal.y() * momentumTwo).scale(RESTITUTION))
         );
     }
 
