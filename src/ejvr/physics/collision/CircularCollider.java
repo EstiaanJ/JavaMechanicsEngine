@@ -75,7 +75,7 @@ public class CircularCollider extends Collider{
     }
 
     @Override
-    public CircularCollider byNetForce(Vector newNet){
+    public CircularCollider byNetForce(VectorDouble newNet){
         return new CircularCollider(this.id,this.radius,super.byNetForce(newNet));
     }
 }

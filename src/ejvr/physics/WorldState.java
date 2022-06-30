@@ -66,8 +66,6 @@ public class WorldState {
         }
     }
 
-    public void stepFrame(PApplet graphics, Method method) {}
-
     private CircularCollider[] resolveCollisions() {
         CollisionIDPair[] collisions = detectIntersections(colliderList);
         CircularCollider[] returnList = seperateIntersectingEntities(collisions);//colliderList;
