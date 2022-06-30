@@ -57,8 +57,8 @@ public class GraphicsTest extends PApplet {
         //background(0);
         frameItter++;
         //debug.setPos(new Point(mouseX,mouseY));
-        debug.setAngle((mouseX - 100)/100.0);
-        debug.draw(this);
+        //debug.setAngle((mouseX - 100)/100.0);
+        //debug.draw(this);
         //drawCursor();
 
         if(frameItter > 6){

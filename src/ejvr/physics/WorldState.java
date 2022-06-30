@@ -4,12 +4,11 @@ import ejvr.math.real.VectorDouble;
 import ejvr.physics.collision.CircularCollider;
 import ejvr.physics.collision.CircularColliderPair;
 import ejvr.physics.kinematics.KinematicBody;
+import ejvr.stopwatch.Stopwatch;
 import processing.core.PApplet;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class WorldState {
     public static final int CLAMP_X_MAX = 800;
@@ -83,17 +82,20 @@ public class WorldState {
     }
 
     private CollisionIDPair[] detectIntersections(CircularCollider[] entitiesToCheck) {
-        ArrayList<CollisionIDPair> pairs = new ArrayList<>();
+        //TODO: Test if a set (list of unique objects) can do this faster
+        //ArrayList<CollisionIDPair> collisionSet = new ArrayList<>();
+        Set<CollisionIDPair> collisionSet = new TreeSet<>();
         for (CircularCollider currentEntity : entitiesToCheck) {
             for (CircularCollider targetEntity : entitiesToCheck) {
                 if (!currentEntity.quickEquals(targetEntity)) {
                     if (CircularCollider.overlap(currentEntity, targetEntity)) {
-                        pairs.add(new CollisionIDPair(currentEntity.id, targetEntity.id));
+                        //collisionSet.add(new CollisionIDPair(currentEntity.id, targetEntity.id));
+                        collisionSet.add(new CollisionIDPair(currentEntity.id,targetEntity.id));
                     }
                 }
             }
         }
-        return pairs.toArray(new CollisionIDPair[pairs.size()]);
+        return collisionSet.toArray(new CollisionIDPair[collisionSet.size()]);
     }
 
 
