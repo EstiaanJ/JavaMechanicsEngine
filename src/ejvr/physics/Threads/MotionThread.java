@@ -1,6 +1,7 @@
 package ejvr.physics.Threads;
 
 import ejvr.physics.WorldState;
+import ejvr.stopwatch.Stopwatch;
 
 public class MotionThread implements Runnable{
     private WorldState worldState;
@@ -26,9 +27,10 @@ public class MotionThread implements Runnable{
             long frameTimeExpected = (long)((1.0/60) * 1000);
             long frameStart = System.currentTimeMillis();
             dt = ((double)frameTimeExpected)/1000.0; //((double) (System.nanoTime() - lasTime)) / 1000000000.0;
+            Stopwatch stopwatch = new Stopwatch(true);
             worldState = worldState.stepCollisions(dt);
+            System.out.println(stopwatch.elapsedSeconds());
             worldState = worldState.stepMotion(dt);
-
             long frameEnd = System.currentTimeMillis();
             long actualDelta = frameEnd - frameStart;
             long sleepTime = (frameTimeExpected - actualDelta);

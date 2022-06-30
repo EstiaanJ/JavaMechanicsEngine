@@ -26,5 +26,6 @@
     </orderEntry>
     <orderEntry type="module" module-name="math" />
     <orderEntry type="library" name="core" level="project" />
+    <orderEntry type="module" module-name="Utils" />
   </component>
 </module>

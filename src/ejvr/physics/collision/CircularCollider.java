@@ -5,7 +5,7 @@ import ejvr.math.real.VectorDouble;
 import ejvr.physics.kinematics.KinematicBody;
 
 public class CircularCollider extends Collider{
-    public static final double RESTITUTION = 0.99;
+    public static final double RESTITUTION = 0.9;
 
     public final double radius;
 
