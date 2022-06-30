@@ -1,15 +1,15 @@
 package ejvr.physics;
 
-import ejvr.maths.Point;
+import ejvr.math.real.VectorDouble;
 
 public class MechanicsCore {
-    protected Point position;
+    protected VectorDouble position;
 
-    public Point getPos(){
+    public VectorDouble getPos(){
         return this.position;
     }
 
-    public void setPos(Point inPos) {
+    public void setPos(VectorDouble inPos) {
         position = inPos;
     }
 }

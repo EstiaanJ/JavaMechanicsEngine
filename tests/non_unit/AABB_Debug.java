@@ -1,11 +1,11 @@
 package non_unit;
 
-import ejvr.maths.Point;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.collision.AABB;
 import processing.core.PApplet;
 
 public class AABB_Debug extends AABB {
-    public AABB_Debug(Point position, double width, double height) {
+    public AABB_Debug(VectorDouble position, double width, double height) {
         super(position, width, height);
     }
 

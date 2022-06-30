@@ -1,6 +1,6 @@
 package ejvr.physics.kinematics;
 
-import ejvr.maths.Vector;
+import ejvr.math.real.VectorDouble;
 
 public class Worker extends Thread{
     private KinematicBody entityF;

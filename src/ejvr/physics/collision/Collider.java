@@ -1,6 +1,6 @@
 package ejvr.physics.collision;
 
-import ejvr.maths.Point;
+import ejvr.math.real.VectorDouble;
 import ejvr.physics.kinematics.KinematicBody;
 
 public class Collider extends KinematicBody {
@@ -17,7 +17,7 @@ public class Collider extends KinematicBody {
         return this.id == targetEntity.id;
     }
 
-    public Point pos(){
+    public VectorDouble pos(){
         return aabb.getPos();
     }
 }
