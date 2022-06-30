@@ -7,8 +7,10 @@ import ejvr.physics.kinematics.KinematicBody;
 import ejvr.stopwatch.Stopwatch;
 import processing.core.PApplet;
 
-import java.lang.reflect.Method;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class WorldState {
     public static final int CLAMP_X_MAX = 800;
@@ -60,7 +62,6 @@ public class WorldState {
             graphics.stroke(255);
             graphics.fill(0);
             graphics.circle(0, 0, (float) cc.radius * 2);
-
             graphics.popMatrix();
         }
     }
@@ -169,6 +170,17 @@ public class WorldState {
         return new WorldState(colliders.toArray(new CircularCollider[colliders.size()]));
     }
 
-
+    public WorldState addCircularCollider(CircularCollider collider){
+        if(collider.id < colliderList.length){
+            return replaceEntity(collider, collider.id);
+        } else {
+            ArrayList<CircularCollider> newColliderList = new ArrayList<>();
+            for(int i = 0; i < colliderList.length; i++){
+                newColliderList.add(colliderList[i]);
+            };
+            newColliderList.add(collider);
+            return new WorldState(newColliderList.toArray(new CircularCollider[newColliderList.size()]));
+        }
+    }
 
 }
